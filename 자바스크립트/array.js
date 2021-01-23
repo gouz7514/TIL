@@ -18,8 +18,11 @@ arr.forEach((n, i) => console.log(n, i));
 arr.push('d');
 console.log(arr);
 
-arr.pop();
+const test = arr.pop();
 console.log(arr);
+console.log('test : ', test);
+console.log(test);
+console.log(typeof(test));
 
 // shift와 unshift는 느리다.
 // unshift : 앞에서부터 데이터 삽입
@@ -46,7 +49,7 @@ console.log(narr);
 // 5. Searching
 // indexOf
 console.log(arr.indexOf('a'));
-// include
+// includes
 console.log(narr.includes('aa'));
 // lastindexOf
 narr.push('a');
