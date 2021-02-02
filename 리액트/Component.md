@@ -2,7 +2,7 @@
 컴포넌트가 무엇인지, 어떻게 사용하는지 알아보자
 
 ### Component
-[React document - components & props](https://ko.reactjs.org/docs/components-and-props.html)
+[React document - components & props](https://ko.reactjs.org/docs/components-and-props.html)<br>
 컴포넌트는 자바스크립트의 함수와 유사하며 `props`라는 입력을 받아 화면에 나타낼 React element를 return한다.
 ```javascript
 function Welcome(props) {
@@ -71,5 +71,5 @@ export default App;
 Food Component에 `fav`라는 `props`를 전달하고,
 Food component에서는 `{fav}`를 통해 `props.fav`를 바로 사용한다.
 
-결과는 아래와 같다.
+결과는 아래와 같다.<br>
 ![출력 결과](https://images.velog.io/images/gouz7514/post/ffca4eff-4b34-4474-b61c-bc4f3d294a44/image.png)
