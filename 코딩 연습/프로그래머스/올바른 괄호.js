@@ -1,6 +1,5 @@
 // 문제 링크 : https://programmers.co.kr/learn/courses/30/lessons/12909
 function solution(s){
-  let stack = [];
   let a = 0;
   for(let i of s) {
       a += i == '(' ? 1 : -1;
