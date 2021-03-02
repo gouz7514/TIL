@@ -12,12 +12,12 @@ const promise = new Promise((resolve, reject) => {
     // doing some heavy work(network, file etc)
     console.log('doing something...');
     setTimeout(() => {
-        resolve('kim');
-        // reject(new Error('no network'));
+        // resolve('kim');
+        reject(new Error('no network'));
     }, 2000)
 });
 
-// 2. Consumer : then, cathc, finally
+// 2. Consumer : then, catch, finally
 // then은 promise를 return하기 때문에 catch 이어서 사용 가능(chaining)
 promise
     .then((value) => {
@@ -53,7 +53,8 @@ const getHen = () =>
     });
 const getEgg = hen =>
     new Promise((resolve, reject) => {
-        setTimeout(() => reject(new Error(`new Error ${hen} => 🔥`)), 1000);
+        // setTimeout(() => resolve(`${hen} => 🥚`), 1000);
+        setTimeout(() => reject(new Error(`new Error ${hen} => 🥚`)), 1000);
     });
 const cook = egg =>
     new Promise((resolve, reject) => {
@@ -61,11 +62,19 @@ const cook = egg =>
     });
 
 getHen()
-.then(getEgg)
-.catch(error => {
+  .then(getEgg)
+  .catch(error => {
     return '🍔';
-})
-.then(cook)
-.then(console.log)
-.catch(console.log);
+  })
+  .then(cook)
+  .then(console.log);
+
+// getHen()
+// .then(getEgg)
+// .catch(error => {
+//     return '🍔';
+// })
+// .then(cook)
+// .then(console.log)
+// .catch(console.log);
 

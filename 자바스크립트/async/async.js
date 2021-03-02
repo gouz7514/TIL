@@ -13,17 +13,17 @@ console.log(user);
 // 2. await
 // async가 붙은 함수 안에서만 쓸 수 있음
 function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function getApple() {
-    await delay(1000);
-    return '🍎';
+  await delay(1000);
+  return '🍎';
 }
 
 async function getBanana() {
-    await delay(1000);
-    return '🍌';
+  await delay(1000);
+  return '🍌';
 }
 // function getBanana() {
 //     return delay(3000)
