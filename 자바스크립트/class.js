@@ -64,9 +64,9 @@ class Article {
     }
 }
 const article1 = new Article(1);
-console.log(article1.publisher);
-console.log(Article.publisher);
-Article.printPublisher();
+console.log(article1.publisher); // undefined
+console.log(Article.publisher); // abcd
+Article.printPublisher(); // abcd
 
 // 5. 상속
 class Shape {

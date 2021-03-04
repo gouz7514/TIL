@@ -20,6 +20,9 @@ console.log(age);
 // const
 // 값 변경 불가
 
+// Immutable data type : 데이터 자체를 변경 불가. primitive types, frozen objects
+// Mutable data type : object
+
 // 변수 타입
 // primitive, objective
 // function
@@ -39,10 +42,14 @@ console.log(greeting);
 // symbol
 const symbol1 = Symbol('id');
 const symbol2 = Symbol('id');
-console.log(symbol1 === symbol2);
+console.log(symbol1 === symbol2); // false
+// Symbol.for 메소드를 통해 생성된 Symbol 값은 반드시 키를 갖는다.
+// 이에 반해 Symbol 함수를 통해 생성된 Symbol 값은 키가 없다.
 const symbol3 = Symbol.for('id');
 const symbol4 = Symbol.for('id');
-console.log(symbol3 === symbol4);
+console.log(Symbol.keyFor(symbol3));
+console.log(Symbol.keyFor(symbol4));
+console.log(symbol3 === symbol4); // true
 
 // Dynamic typing -> TypeScript
 let text = 'hello';
