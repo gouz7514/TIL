@@ -2,13 +2,31 @@
 차세대 HTML5와 함께 등장한 새로운 스타일. 차세대 웹 개발을 위한 새로운 표준<br>
 신 기능 : 다중 컬럼 레이아웃, 텍스트효과 및 블럭효과, 시범적용 위해 접두사 사용(webkit 등)
 ***
-### `class`와 `id`의 차이점
-`id`는 유일한 요소에 적용할 때, `class`는 복수의 요소에 적할 때<br>
-***
 ### `float`가 어떻게 동작하나?
 [https://developer.mozilla.org/ko/docs/Web/CSS/float](https://developer.mozilla.org/ko/docs/Web/CSS/float)<br>
 `float` 속성은 현재 위치의 왼쪽이나 오른쪽으로 shift되어 배치되는 박스의 일종.<br>
 이 때 컨텐츠는 float 속성이 적용된 요소의 주변에 위치함
+***
+### float를 해제하지 않으면 안되는 이유
+자식이 float 속성을 가지면 부모의 너비는 자식의 너비를 계산하지 않고 그리기 때문.
+- 1) float를 빈 엘리먼트로 clear<br>
+float자식을 가지는 container의 마지막 자식에 빈 엘리먼트를 추가하고 clear: both 스타일을 준다.
+```javascript
+<body>
+  <div class="container">
+    ...
+    <div style="clear: both;"></div>
+  </div>
+</body>
+```
+- 2) `:after`에 clear 속성 넣기<br>
+```javascript
+.container:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+```
 ***
 ### 클리어링에는 어떤 것들이 있으며, 각각은 어떨 때 사용?
 [https://developer.mozilla.org/ko/docs/Web/CSS/clear](https://developer.mozilla.org/ko/docs/Web/CSS/clear)<br>
@@ -55,3 +73,4 @@ block 레벨 요소와 inline 레벨 요소의 특징을 모두 가지고 있다
 flex는 레이아웃을 좀 더 편하게 잡기 위해 만들어진 CSS 속성. 요소들의 크기나 위치를 쉽게 잡을 수 있다.<br>
 flex는 컨테이너와 아이템 개념을 사용해 요소의 크기가 불분명하거나 동적인 경우에도 요소를 효율적으로 정렬할 수 있다.<br>
 ***
+
