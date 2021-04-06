@@ -2,7 +2,7 @@
 
 const addItems = document.querySelector('.add-items');
 const itemsList = document.querySelector('.plates');
-const items = JSON.parse(localStorage.getItem('items')) || [];
+let items = JSON.parse(localStorage.getItem('items')) || [];
 const clrBtn = document.querySelector('.clear-btn');
 
 
@@ -42,7 +42,8 @@ function toggleDone(e) {
 
 function clrItem() {
     itemsList.innerHTML = "";
-    localStorage.removeItem('items', itemsList.innerHTML);
+    localStorage.removeItem('items');
+    items = [];
     console.log(itemsList);
     // loadItem();
     // populateList(itemsList);
