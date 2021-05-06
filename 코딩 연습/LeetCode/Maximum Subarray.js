@@ -15,6 +15,9 @@ var maxSubArray = function(nums) {
   return answer;
 };
 
+let nums = [-2,1,-3,4,-1,2,1,-5,4];
+maxSubArray(nums);
+
 // 남의 풀이
 // for문 하나만 돌리면서 바로 비교 가능
 function maxSubArray(A) {
