@@ -34,6 +34,7 @@ function findOdd(A) {
 }
 
 // clever
+// ^ : XOR 연산자 (이걸 사용하면 홀짝 계산이 가능하구나)
 function findOdd(A) {
   return A.reduce((a,b) => a ^ b);
 }
