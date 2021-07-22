@@ -1,7 +1,8 @@
 [Vuex 가이드 - 변이](https://vuex.vuejs.org/kr/guide/mutations.html)
 
 ### 변이
-Vuex 저장소에서 실제로 상태를 변경하는 유일한 방법은 변이하는 것이다. 각 변이에는 타입 문자열 **핸들러**가 있으며, 핸들러 함수는 첫번째 전달인자로 상태를 받는다.
+Vuex 저장소에서 실제로 상태를 변경하는 유일한 방법은 변이하는 것이다.<br>
+각 변이에는 타입 문자열 **핸들러**가 있으며, 핸들러 함수는 첫번째 전달인자로 상태를 받는다.
 ```javascript
 const store = new Vuex.Store({
   state: {
