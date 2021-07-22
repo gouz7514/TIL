@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Circle Progress Bar</title>
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <circle
+          cx="500" 
+          cy="500" 
+          r="110" 
+          fill="#efefef"
+      />
+      <circle
+          id="progress" 
+          cx="500" 
+          cy="500" 
+          r="100" 
+          stroke="#3fd0af"
+          fill="#efefef"
+          stroke-width='20'
+          stroke-linecap="round"
+          stroke-dasharray="1,800"
+      />
+      <circle
+          cx="500" 
+          cy="500" 
+          r="90"
+          fill="#fff" 
+      />
+      <text x="490" y="505" fill="red" id="precent">0%</text>
+  </svg>
+    <script src="./index.js" defer></script>
+    </script>
+  </body>
+</html>
+

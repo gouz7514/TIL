@@ -9,7 +9,7 @@ window.onload = function() {
       fps = 10,
       percent = 0,
       onepercent = 360 / 100,
-      result = onepercent * 50;
+      result = onepercent * 60;
   
   c.lineCap = 'round';
   arcMove();
@@ -32,7 +32,7 @@ window.onload = function() {
       c.beginPath();
       c.strokeStyle = '#3949AB';
       c.lineWidth = '10';
-      c.arc( posX, posY, 70, (Math.PI/180) * 270, (Math.PI/180) * (270 + deegres) );
+      c.arc( posX, posY, 70, -(Math.PI/180) * 270, -(Math.PI/180) * (270 + deegres) );
       c.stroke();
       if( deegres >= result ) clearInterval(acrInterval);
     }, fps);
