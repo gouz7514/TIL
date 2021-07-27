@@ -130,3 +130,46 @@ export default thing;
 export default 'hello!';
 ```
 ---
+### `export { thing as default }`는 다르다
+`export {}`는 값이 아닌 live reference를 전달하기 때문에 사용할 수 없습니다. 그래서
+```javascript
+// module.js
+let thing = 'initial';
+
+export { thing, thing as default };
+
+setTimeout(() => {
+  thing = 'changed';
+}, 500);
+```
+```javascript
+// main.js
+import { thing, default as defaultThing } from './module.js';
+import anotherDefaultThing from './module.js';
+
+setTimeout(() => {
+  console.log(thing); // changed
+  console.log(defaultThing); // changed
+  donsole.log(anotherDefaultThing); // changed
+}, 1000);
+```
+`export default thing`과 다르게, `export { thing as default }`는 `thing`을 live reference로 넘겨 줍니다. 따라서,
+```javascript
+// These give you a live reference to the exported thing(s):
+import { thing } from './module.js';
+import { thing as otherName } from './module.js';
+import * as module from './module.js';
+const module = await import('./module.js');
+// This assigns the current value of the export to a new identifier:
+let { thing } = await import('./module.js');
+
+// These export a live reference:
+export { thing };
+export { thing as otherName };
+export { thing as default };
+// These export the current value:
+export default thing;
+export default 'hello!';
+```
+아직 안 끝났다!
+***
