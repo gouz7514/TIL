@@ -173,3 +173,37 @@ export default 'hello!';
 ```
 아직 안 끝났다!
 ***
+### `export default function`은 또 다른 경우
+`export default` 바로 다음 구문은 표현식처럼 처리된다고 위에서 언급했습니다. 하지만 예외가 존재합니다.
+```javascript
+// module.js
+export default function thing() {}
+
+setTimeout(() => {
+  thing = 'changed';
+}, 500);
+```
+```javascript
+// main.js
+import thing from './module.js';
+
+setTimeout(() => {
+  console.log(thing); // changed
+}, 1000);
+```
+`export default funcation`은 고유의 특별한 구문이므로 `changed`가 출력됩니다.<br>
+이 경우 함수는 참조에 의해 전달됩니다.<br>
+만약 `module.js`를 바꾼다면
+```javascript
+// module.js
+function thing() {}
+
+export default thing;
+
+setTimeout(() => {
+  thing = 'changed';
+}, 500);
+```
+더 이상 특별 케이스가 아니므로 값에 의해 전달되서 `f thing() {}`이 출력됩니다.
+
+**왜?**
