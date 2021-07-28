@@ -207,3 +207,53 @@ setTimeout(() => {
 더 이상 특별 케이스가 아니므로 값에 의해 전달되서 `f thing() {}`이 출력됩니다.
 
 **왜?**
+`export default function`뿐 아니라 `export default class`도 같은 방식으로 특별한 경우입니다.<br>
+이는 이러한 문장이 표현식일 때 나타나는 동작의 변화와 관련이 있습니다.
+```javascript
+function someFunction() {}
+class SomeClass {}
+
+console.log(typeof someFunction); // "function"
+console.log(typeof SomeClass); // "function"
+```
+하지만 표현식으로 바꾼다면
+```javascript
+(function someFunction() {});
+(class SomeClass {});
+
+console.log(typeof someFunction); // "undefined"
+console.log(typeof SomeClass); // "undefined"
+```
+`function`과 `class` 선언문이 스코프/블록에 식별자를 만드는 반면 `function`, `class`표현 식은 그렇지 않습니다.
+
+따라서,
+```javascript
+export default function someFunction() {}
+console.log(typeof someFunction); // "function"
+```
+만약 `export defatul function`이 특수 케이스가 아니었다면, 함수는 표현식처럼 처리되어서 `undefined`가 출력됐을 것입니다. 특수 케이스는 또한 순환 종속의 경우에도 도움이 됩니다. (이 부분은 후술)
+
+정리하자면
+```javascript
+// These give you a live reference to the exported thing(s):
+import { thing } from './module.js';
+import { thing as otherName } from './module.js';
+import * as module from './module.js';
+const module = await import('./module.js');
+// This assigns the current value of the export to a new identifier:
+let { thing } = await import('./module.js');
+
+// These export a live reference:
+export { thing };
+export { thing as otherName };
+export { thing as default };
+export default function thing() {}
+// These export the current value:
+export default thing;
+export default 'hello!';
+```
+`export default identifier`가 살짝 이상해 보이긴 합니다.<br>
+`export default 'hello!'`는 값에 의해 전달될 필요가 있지만, `export default function`이라는 참조로 전달되는 특수 케이스가 있는 만큼, `export default identifier`같은 경우를 위한 특수 케이스가 필요해 보입니다. 제 생각에 지금 바꾸기엔 너무 늦은 것 같네요.
+
+저는 자바스크립트 모듈 디자인과 관련 있는 [Dave Herman](https://twitter.com/littlecalculist)과 얘기를 나눴습니다.<br>
+그는 default exports의 초기 디자인은 `thing`을 좀 더 명확히 표현식처럼 처리할 수 있는 `export default = thing`이었다고 했습니다. 전적으로 동의합니다!
