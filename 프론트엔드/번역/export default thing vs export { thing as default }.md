@@ -257,3 +257,122 @@ export default 'hello!';
 
 저는 자바스크립트 모듈 디자인과 관련 있는 [Dave Herman](https://twitter.com/littlecalculist)과 얘기를 나눴습니다.<br>
 그는 default exports의 초기 디자인은 `thing`을 좀 더 명확히 표현식처럼 처리할 수 있는 `export default = thing`이었다고 했습니다. 전적으로 동의합니다!
+***
+### 순환 종속의 경우에는 어떤가?
+우선 `hoisting`에 대해 알아야 합니다.
+```javascript
+thisWorks();
+
+function thisWorks() {
+  console.log('yep, it does');
+}
+```
+순수 함수 선언의 경우 항상 최상단으로 옮겨지게 됩니다.
+```javascript
+// Doesn't work
+assignedFunction();
+// Doesn't work either
+new SomeClass();
+
+const assignedFunction = function () {
+  console.log('nope');
+};
+class SomeClass {}
+```
+`let`, `const`, `class`가 초기화 되기 전 접근하려 한다면 에러가 발생합니다.
+
+**`var`는 다르다**
+```javascript
+var foo = 'bar';
+
+function test() {
+  console.log(foo);
+  var foo = 'hello';
+}
+
+test();
+```
+위 코드는 함수 내의 `var foo`는 함수의 최상단으로 호이스팅되지만, `'hello'`의 할당은 그대로기 때문에 `undefined`가 출력됩니다.<br>
+`let`, `const`, `class` 가 에러를 발생시키는 것과 비슷한 경우입니다.
+
+**순환 종속의 경우?**
+자바스크립트는 순환 종속을 허용하지만 기피해야 합니다. 예를 들어
+```javascript
+// main.js
+import { foo } from './module.js';
+
+foo();
+
+export function hello() {
+  console.log('hello');
+}
+```
+```javascript
+// module.js
+import { hello } from './main.js';
+
+hello();
+
+export function foo() {
+  console.log('foo');
+}
+```
+이것은 동작합니다! `"hello"`와 `"foo"`가 출력됩니다.<br>
+하지만 이는 양측의 함수가 호이스팅되기 때문에 가능한 현상입니다. 만약 코드를 다음과 같이 변경한다면
+
+```javascript
+// main.js
+import { foo } from './module.js';
+
+foo();
+
+export const hello = () => console.log('hello');
+```
+```javascript
+// module.js
+import { hello } from './main.js';
+
+hello();
+
+export const foo = () => console.log('foo');
+```
+실패합니다. `module.js`가 먼저 실행되고, 그 결과로 `hello`가 초기화되기 전 접근을 시도하기 때문에 에러가 발생합니다.
+
+`export default`를 포함해 봅시다.
+```javascript
+// main.js
+import foo from './module.js';
+
+foo();
+
+function hello() {
+  console.log('hello');
+}
+
+export default hello;
+```
+```javascript
+// module.js
+import hello from './main.js';
+
+hello();
+
+function foo() {
+  console.log('foo');
+}
+
+export default foo;
+```
+이 코드가 제가 질문받은 내용입니다.<br>
+`module.js`의 `hello`가 `main.js`에 의해 export된 숨겨진 변수를 가리키고, 초기화되기 전 접근을 하기 때문에 실패합니다.
+
+만약 `main.js`가 `export { hello as default }`로 바뀐다면 함수를 참조에 의해 전달하고 호이스팅되기 때문에 실패하지 않습니다.<br>
+만약 `main.js`가 `export default function hello()`로 바뀐다면, `export default function`의 경우이기 때문에 실패하지 않습니다.
+
+제 생각에는 `export default function`이 특별한 이유가 호이스팅이 가능하게 하는데 있다고 생각합니다.<br>그러나 `export default identifier`는 일관성으로 인해 특수한 경우라고 생각합니다.
+
+내용은 여기까지입니다.
+***
+내용이 이렇게까지 길 줄은 몰랐다...<br>
+다시 읽어보고 내용을 정리해야 겠지만 대충 골조는 `export default`문의 사용을 기피해야 한다는 점?<br>
+이 내용이 내 것이 된다면 코드를 아주 멋드러지게 짤 수 있을 것 같다
