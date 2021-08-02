@@ -11,13 +11,18 @@
 // destructured import는 새로운 식별자에 현재 값을 할당하기 때문에 변화 반영 X
 // ---------------------
 
-import { thing, default as defaultThing } from './module.js'
-import anotherDefaultThing from './module.js';
+// import { thing, default as defaultThing } from './module.js'
+// import anotherDefaultThing from './module.js';
+
+// setTimeout(() => {
+//   console.log(thing); // changed
+//   console.log(defaultThing); // changed
+//   console.log(anotherDefaultThing); // changed
+// }, 1000);
+
+// ---------------------
+import thing from './module.js'
 
 setTimeout(() => {
   console.log(thing); // changed
-  console.log(defaultThing); // changed
-  console.log(anotherDefaultThing); // changed
 }, 1000);
-
-// ---------------------

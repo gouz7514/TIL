@@ -19,12 +19,31 @@
 
 // ---------------------
 
-let thing = 'intial';
+// let thing = 'intial';
 
-export { thing, thing as default };
+// export { thing, thing as default };
+
+// setTimeout(() => {
+//   thing = 'changed';
+// }, 500);
+
+// export default thing과 다르게 export { thing as default } 는 thing을 live reference로 넘겨준다.
+
+// ---------------------
+// export default function thing() {}
+
+// setTimeout(() => {
+//   thing = 'changed';
+// }, 500);
+// export default function은 고유한 구문이므로 changed가 그대로 출력
+// export default function은 특이 케이스라 가능
+function thing() {}
+
+export default thing;
 
 setTimeout(() => {
   thing = 'changed';
 }, 500);
+// 이 경우 [Function: thing]이 출력된다.
 
-// export default thing과 다르게 export { thing as default } 는 thing을 live reference로 넘겨준다.
+// 결론은 export default의 사용을 자제하자
